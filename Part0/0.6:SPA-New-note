@@ -1,0 +1,9 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: The server responds with status code 201 created
+
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+page re renders using existing js code and updates the page
+end note
