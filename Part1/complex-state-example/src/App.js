@@ -16,11 +16,15 @@ const History = (props) => {
   )
 }
 
-const Button = ({ handleClick, text }) => (
-  <button onClick={handleClick}>
-    {text}
-  </button>
-)
+const Button = (props) => { 
+  console.log('props value is', props)
+  const { handleClick, text } = props
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
 
 
 
@@ -38,6 +42,9 @@ const App = () => {
     setAll(allClicks.concat('R'))
     setRight(right + 1)
   }
+
+  
+
   return (
     <div>
       {left}
