@@ -15,6 +15,17 @@ const App = () => {
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
+  const FavouriteAnecdote = () => {
+    let index = votes.indexOf(Math.max(...votes));
+
+    return (
+      <div>
+      <h2>Anecdote with most votes</h2>
+      {anecdotes[index]}
+      <p>has {votes[index]} votes</p>
+    </div>
+    )
+  }
 
   function randomArraySelection(max, callback) {
     const random = Math.floor(Math.random() * max);
@@ -26,15 +37,22 @@ const App = () => {
     voteCopy[stateVote] += 1;
     setVotes(voteCopy);
   }
+
   
   return (
     <>
     <div>
+      <h2>Anecdote of the day</h2>
       {anecdotes[selected]}
       <p>has {votes[selected]} votes</p>
     </div>
-    <button onClick={() => handleVoteClick(selected)}>Vote</button>
-    <button onClick={() => randomArraySelection((anecdotes.length -1), setSelected)}>next anecdote</button>
+    <div>
+      <button onClick={() => handleVoteClick(selected)}>Vote</button>
+      <button onClick={() => randomArraySelection((anecdotes.length -1), setSelected)}>next anecdote</button>
+    </div>
+    <div>
+      <FavouriteAnecdote />
+    </div>
     </>
   )
 }
