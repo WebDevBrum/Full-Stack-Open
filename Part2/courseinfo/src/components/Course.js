@@ -8,7 +8,6 @@ const Part = (props) => (
   <p>{props.part} {props.exercise}</p>
 )
 
-// NEED TO MAP THE RETUTRN OF THESE ALSO
 
 const Content = ({parts}) => {
   return (
@@ -37,7 +36,6 @@ const Total = ({parts}) => {
   )
 }
 
-// NEED TO MAP THE RETURN OF THESE, POSSIBLE IN APP
 
 const Course = ({course}) => {
   return (
