@@ -8,12 +8,15 @@ This course is notable by its use of exercises to implement and connect these te
 The main focus of this course is on single page applications implemented with React and supporting them with RESTful and GraphQL web services implemented with Node.js. The course also has parts on TypeScript, React Native and Continuous integration.
 
 ## Part 0 : Fundamentals of Web Apps
+
 In this part, we will familiarize ourselves with the practicalities of taking the course. After that we will have an overview of the basics of web development, and also talk about the advances in web application development during the last few decades.
 ---
 ## Part 1 : Introduction to React
+
 In this part, we will familiarize ourselves with the React-library, which we will be using to write the code that runs in the browser. We will also look at some features of JavaScript that are important for understanding React.
 ---
 ## Part 2 : Communicating with server
+
 Let's continue our introduction to React. First, we will take a look at how to render a data collection, like a list of names, to the screen. After this, we will inspect how a user can submit data to a React application using HTML forms. Next, our focus shifts towards looking at how JavaScript code in the browser can fetch and handle data stored in a remote backend server. Lastly, we will take a quick look at a few simple ways of adding CSS styles to our React applications.
 ---
 ## Part 3 : Programming a server with NodeJS and Express
