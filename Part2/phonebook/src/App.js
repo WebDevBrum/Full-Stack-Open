@@ -9,18 +9,23 @@ const App = () => {
 
   const addNewPerson = (event) => {
     event.preventDefault();
-    const nameObject = {
-      name: newName
+    
+    //Filter returns an array based on tetscondition, so if this array is longer than 0 the name exists.
+    if(persons.filter(person => person.name.toLowerCase() === newName.toLowerCase()).length > 0) {
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      const nameObject = {
+        name: newName
+      }
+      setPersons(persons.concat(nameObject))
+      setNewName('')
     }
-    setPersons(persons.concat(nameObject))
-    setNewName('')
+    
   }
 
   const handleNewName = (event) => {
     setNewName(event.target.value);
   }
-
-
 
   return (
     <div>
