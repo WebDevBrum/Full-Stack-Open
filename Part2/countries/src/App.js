@@ -32,7 +32,7 @@ const App = () => {
        setFilteredCountries(filter);  
     }
    }
-   console.log(filteredCountries);
+   console.log(filteredCountries, "is it working???");
   return (
     <>
       <Filter value={newFilter} onChange={handleFilter}/>

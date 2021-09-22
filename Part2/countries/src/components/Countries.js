@@ -9,7 +9,7 @@ const Countries = ({countries}) => {
       ? 
         <CountryList  countries={countries} />
         :
-        <p>Too many countries</p>
+        <p>Too many countries (More than 10)</p>
         } 
       
     </div>

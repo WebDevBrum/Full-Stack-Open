@@ -4,18 +4,18 @@ import Country from './Country';
 const CountryList = ({countries}) => {
 
   const [visibility, setVisibility] = useState(false);
-  const [countryList, setCountryList] = useState(countries);
+  const [singleCountry, setCountry] = useState([]);
 
   const handleClick = (value) => {
     setVisibility(!visibility);
-    setCountryList([value]);
+    setCountry([value]);
   }
 
-  console.log(countryList);
+  
   return (
     <div>
     {
-      countries.length > 1
+      (countries.length > 1 && visibility === false)
       ? 
       countries.map((country, index) => 
       <div key={index} >
@@ -25,7 +25,11 @@ const CountryList = ({countries}) => {
       
         )
         :
-        countries.length > 0  && <Country country={countries[0]}/>
+        (
+          (countries.length > 0  && visibility === false) ? <Country country={countries[0]}/>
+          :
+          visibility && <Country country={singleCountry[0]} />
+        )
     } 
     </div>
     )
