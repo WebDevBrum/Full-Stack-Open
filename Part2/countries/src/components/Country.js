@@ -25,16 +25,21 @@ const Country = ({country}) => {
 
   return (
     <div>
-      <h2>{country.name}</h2>
+      <h2>{country.name.common}</h2>
       <p>Capital: {country.capital}</p>
-      <p>Population: {country.population}</p>
+      <p>Area: {country.area}</p>
       <h3>Languages</h3>
       <ul>
-      {country.languages.map((language, index) => 
-        <li key={language.name}>{language.name}</li> 
+      {Object.keys(country.languages).map((language, index) => 
+        <li key={country.languages[language]}>{country.languages[language]}</li> 
         )}
       </ul>   
-      <img src={country.flag} alt="flag" height="150" />
+      <img src={country.flags[0]} alt="flag" height="150" />
+      <h3>Weather in {country.capital}</h3>
+      <p>Temperature: {weather?.current.temperature}</p>
+      <img src={weather?.current.weather_icons[0]} alt="weather" height="150" />
+      <p>Wind: {weather?.current.wind_speed}mph</p>
+      <p> Direction: {weather?.current.wind_dir} </p>
     </div>
     )
 }

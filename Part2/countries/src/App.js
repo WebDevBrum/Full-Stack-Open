@@ -12,7 +12,7 @@ const App = () => {
   useEffect(() => {
     console.log('effect')
     axios
-      .get('https://restcountries.eu/rest/v2/all')
+      .get('https://restcountries.com/v3/all')
       .then(response => {
         console.log('promise fulfilled')
         setCountries(response.data)
@@ -28,7 +28,7 @@ const App = () => {
     if(value === '') {
       setFilteredCountries([]) 
     } else {  
-       let filter = countries.filter(country => country.name.toLowerCase().includes(newFilter.toLowerCase()));
+       let filter = countries.filter(country => country.name.common.toLowerCase().includes(newFilter.toLowerCase()));
        setFilteredCountries(filter);  
     }
    }
