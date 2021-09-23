@@ -19,8 +19,8 @@ const CountryList = ({countries}) => {
       ? 
       countries.map((country, index) => 
       <div key={index} >
-        <p>{country.name.common}</p>
-        <button  onClick={() => handleClick(country)}>show</button>
+        <label for="show">{country.name.common}: </label>
+        <button  name="show" onClick={() => handleClick(country)}>show</button>
       </div>
       
         )
