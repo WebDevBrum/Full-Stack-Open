@@ -44,13 +44,22 @@ const App = () => {
       id: notes.length + 1,
     }
   
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+    axios
+    .post('http://localhost:3001/notes', noteObject)
+    .then(response => {
+      console.log(response.data);
+      setNotes(notes.concat(response.data))
+      setNewNote('')
+    })
   }
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
+  }
+
+  const toggleImportanceOf = (id) => {
+    console.log(`importance of ${id} needs to be toggled`)
   }
 
   const notesToShow = showAll
@@ -66,8 +75,12 @@ const App = () => {
         </button>
       </div>
       <ul>
-      {notesToShow.map(note =>
-          <Note key={note.id} note={note} />
+      {notesToShow.map((note, i) =>
+        <Note
+            key={i}
+            note={note} 
+            toggleImportance={() => toggleImportanceOf(note.id)}
+          />
         )}
       </ul>
       <form onSubmit={addNote}>
