@@ -16,7 +16,7 @@ const App = () => {
 
 
   useEffect(() => {
-    console.log('effect')
+    console.log('effect hello')
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
@@ -70,6 +70,43 @@ const App = () => {
    }
   }
 
+  const handleDelete = (id, person) => {
+    console.log(id)
+    //SOMETHING VERY WRONG HERE
+    
+    console.log('this returns', test)
+    window.confirm(`Delete ${person.name}?`)
+    
+
+    phoneService
+      .remove(id)
+      .then(
+        
+        setPersons(persons.filter(n => n.id !== id))
+        
+      ).catch(error => {
+              alert(
+                `the note '${person}' was already deleted from server`
+              )
+              setPersons(persons.filter(n => n.id !== id))
+            })
+          
+            
+  }
+
+  // noteService
+  //     .update(id, changedNote)
+  //     .then(returnedNote => {
+  //       setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+  //     })
+  //     .catch(error => {
+  //       alert(
+  //         `the note '${note.content}' was already deleted from server`
+  //       )
+  //       setNotes(notes.filter(n => n.id !== id))
+  //     })
+
+
   return (
     
     <div>
@@ -85,7 +122,9 @@ const App = () => {
       <h2>Numbers</h2>
       <Persons 
         filteredPersons={filteredPersons}
-        persons={persons} />
+        persons={persons} 
+        handleDelete={handleDelete}
+        />
     </div>
   )
 }
