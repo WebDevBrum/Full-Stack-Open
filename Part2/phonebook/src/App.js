@@ -7,11 +7,9 @@ import phoneService from './services/persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]);
-
-  const [filteredPersons, setFilteredPersons] = useState([])
-  
-  const [ newName, setNewName ] = useState('')
-  const [newNumber, setNewNumber] = useState('')
+  const [filteredPersons, setFilteredPersons] = useState([]);
+  const [ newName, setNewName ] = useState('');
+  const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
 
 
@@ -31,9 +29,28 @@ const App = () => {
     event.preventDefault();
     
     //Filter returns an array based on tetscondition, so if this array is longer than 0 the name exists.
+    //Update existing number if person exists
     if(persons.filter(person => person.name.toLowerCase() === newName.toLowerCase()).length > 0) {
-      alert(`${newName} is already added to phonebook`)
+      window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+
+      
+      let existingPerson = persons.find(n => n.name === newName.toLowerCase())
+      let changedPerson =  { ...existingPerson, number: newNumber }
+      
+      //setPersons uses existing state and only modifies the item changed on the server using the response from the server put request.
+    phoneService
+    .update(existingPerson.id, changedPerson)
+    .then(returnedPerson => {
+      setPersons(persons.map(person => person.id !== existingPerson.id ? person : returnedPerson))
+    })
+    .catch(error => {
+      alert(
+        `the note '${existingPerson}' was already deleted from server`
+      )
+      setPersons(persons.filter(n => n.id !== existingPerson.id))
+    })
     } else {
+      //Add a new person
       const nameObject = {
         name: newName,
         number: newNumber}
@@ -71,19 +88,13 @@ const App = () => {
   }
 
   const handleDelete = (id, person) => {
-    console.log(id)
-    //SOMETHING VERY WRONG HERE
     
-    console.log('this returns', test)
     window.confirm(`Delete ${person.name}?`)
     
-
     phoneService
       .remove(id)
       .then(
-        
         setPersons(persons.filter(n => n.id !== id))
-        
       ).catch(error => {
               alert(
                 `the note '${person}' was already deleted from server`
@@ -92,40 +103,7 @@ const App = () => {
             })
   }
 
-  const updateNumber = (id, number) => {
-   
-    const person = persons.find(n => n.id === id)
-    const changedPerson = { ...person, number: number }
-    
-    //setNotes uses existing state and only modifies the item changed on the server using the response from the server put request.
-    phoneService
-      .update(id, changedPerson)
-      .then(returnedPerson => {
-        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
-      })
-      .catch(error => {
-        alert(
-          `the note '${person}' was already deleted from server`
-        )
-        setPersons(persons.filter(n => n.id !== id))
-      })
-  }
-
-  // noteService
-  //     .update(id, changedNote)
-  //     .then(returnedNote => {
-  //       setNotes(notes.map(note => note.id !== id ? note : returnedNote))
-  //     })
-  //     .catch(error => {
-  //       alert(
-  //         `the note '${note.content}' was already deleted from server`
-  //       )
-  //       setNotes(notes.filter(n => n.id !== id))
-  //     })
-
-
   return (
-    
     <div>
       <h2>Phonebook</h2>
       <Filter value={newFilter} onChange={handleFilter}/>
