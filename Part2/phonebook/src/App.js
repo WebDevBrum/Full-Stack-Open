@@ -90,8 +90,25 @@ const App = () => {
               )
               setPersons(persons.filter(n => n.id !== id))
             })
-          
-            
+  }
+
+  const updateNumber = (id, number) => {
+   
+    const person = persons.find(n => n.id === id)
+    const changedPerson = { ...person, number: number }
+    
+    //setNotes uses existing state and only modifies the item changed on the server using the response from the server put request.
+    phoneService
+      .update(id, changedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+      })
+      .catch(error => {
+        alert(
+          `the note '${person}' was already deleted from server`
+        )
+        setPersons(persons.filter(n => n.id !== id))
+      })
   }
 
   // noteService
