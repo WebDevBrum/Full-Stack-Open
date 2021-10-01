@@ -11,6 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState(null)
 
 
   useEffect(() => {
@@ -42,6 +43,13 @@ const App = () => {
     .update(existingPerson.id, changedPerson)
     .then(returnedPerson => {
       setPersons(persons.map(person => person.id !== existingPerson.id ? person : returnedPerson))
+
+      setNotificationMessage(
+        `${existingPerson.name} was updated on the server`
+      )
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     })
     .catch(error => {
       alert(
@@ -64,6 +72,12 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+        setNotificationMessage(
+          `${nameObject.name} was added to the server`
+        )
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
     }
   }
 
@@ -103,9 +117,24 @@ const App = () => {
             })
   }
 
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+
+
+  
+    return (
+      <div className="added">
+        {message}
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage}/>
       <Filter value={newFilter} onChange={handleFilter}/>
       <h3>Add a New</h3>
       <PersonForm 
