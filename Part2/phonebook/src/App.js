@@ -12,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
   const [notificationMessage, setNotificationMessage] = useState(null)
+  const [notificationClass, setNotificationClass] = useState()
 
 
   useEffect(() => {
@@ -44,6 +45,7 @@ const App = () => {
     .then(returnedPerson => {
       setPersons(persons.map(person => person.id !== existingPerson.id ? person : returnedPerson))
 
+      setNotificationClass('added');
       setNotificationMessage(
         `${existingPerson.name} was updated on the server`
       )
@@ -52,9 +54,13 @@ const App = () => {
       }, 5000)
     })
     .catch(error => {
-      alert(
-        `the note '${existingPerson}' was already deleted from server`
+      setNotificationClass('error');
+      setNotificationMessage(
+        `${existingPerson.name} was already removed from the server`
       )
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
       setPersons(persons.filter(n => n.id !== existingPerson.id))
     })
     } else {
@@ -72,6 +78,7 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+        setNotificationClass('added');
         setNotificationMessage(
           `${nameObject.name} was added to the server`
         )
@@ -110,9 +117,13 @@ const App = () => {
       .then(
         setPersons(persons.filter(n => n.id !== id))
       ).catch(error => {
-              alert(
-                `the note '${person}' was already deleted from server`
-              )
+        setNotificationClass('error');
+        setNotificationMessage(
+          `${person.name} was already removed from the server`
+        )
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
               setPersons(persons.filter(n => n.id !== id))
             })
   }
@@ -125,7 +136,7 @@ const App = () => {
 
   
     return (
-      <div className="added">
+      <div className={notificationClass}>
         {message}
       </div>
     )
@@ -134,7 +145,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notificationMessage}/>
+      <Notification message={notificationMessage} class={notificationClass} />
       <Filter value={newFilter} onChange={handleFilter}/>
       <h3>Add a New</h3>
       <PersonForm 
