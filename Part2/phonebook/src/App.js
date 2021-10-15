@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     console.log('effect hello')
     axios
-      .get('http://localhost:3001/api/persons')
+      .get('https://still-shore-15586.herokuapp.com/api/persons')
       .then(response => {
         console.log('promise fulfilled')
         setPersons(response.data)
