@@ -68,7 +68,7 @@ const App = () => {
       const nameObject = {
         name: newName,
         number: newNumber}
-      setPersons(persons.concat(nameObject))
+      // setPersons(persons.concat(nameObject))
       
       
       phoneService
@@ -77,6 +77,9 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+        }).catch(error => {
+          setNotificationClass('error');
+          setNotificationMessage(JSON.stringify(error.response.data.error));
         })
         setNotificationClass('added');
         setNotificationMessage(
@@ -85,6 +88,7 @@ const App = () => {
         setTimeout(() => {
           setNotificationMessage(null)
         }, 5000)
+        
     }
   }
 
