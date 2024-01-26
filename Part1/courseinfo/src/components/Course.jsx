@@ -32,7 +32,7 @@ const Course = ({ course }) => {
 
     return (
       <div>
-        <p>Number of exercises {sum}</p>
+        <strong>Total of {sum} excercises</strong>
       </div>
     );
   };
