@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const PersonForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
@@ -15,13 +16,29 @@ const PersonForm = ({ persons, setPersons }) => {
       alert(`${newName} is already added to phonebook`);
       return;
     }
+
+    const nextId =
+      persons.reduce(
+        (maxId, item) => Math.max(maxId, parseInt(item.id, 10) || 0),
+        0
+      ) + 1;
+
     const personObject = {
       name: newName,
       number: newNumber,
+      id: nextId.toString(),
     };
 
-    setPersons(persons.concat(personObject));
-    setNewName("");
+    axios
+      .post("http://localhost:3001/persons", personObject)
+      .then((response) => {
+        setPersons(persons.concat(response.data));
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   };
 
   const handleNameChange = (event) => {
