@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import personService from "../services/persons";
 
 const PersonForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
@@ -29,16 +29,27 @@ const PersonForm = ({ persons, setPersons }) => {
       id: nextId.toString(),
     };
 
-    axios
-      .post("http://localhost:3001/persons", personObject)
-      .then((response) => {
-        setPersons(persons.concat(response.data));
+    personService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
       });
+
+    // axios
+    //   .post("http://localhost:3001/persons", personObject)
+    //   .then((response) => {
+    //     setPersons(persons.concat(response.data));
+    //     setNewName("");
+    //     setNewNumber("");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response.data);
+    //   });
   };
 
   const handleNameChange = (event) => {
