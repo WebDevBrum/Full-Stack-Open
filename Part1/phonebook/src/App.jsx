@@ -24,12 +24,30 @@ const App = () => {
     person.name.toLowerCase().includes(newFilter.toLowerCase())
   );
 
+  const deletePerson = (id, name) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete ${name}`
+    );
+
+    if (isConfirmed) {
+      personService
+        .deleteItem(id)
+        .then((deletedItem) => {
+          console.log("Deletion successful:", deletedItem);
+          setPersons(persons.filter((person) => person.id != id));
+        })
+        .catch((error) => {
+          console.error("There was an error deleteing the person:", error);
+        });
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
       <PersonForm persons={persons} setPersons={setPersons} />
-      <Persons filteredPersons={filteredPersons} />
+      <Persons filteredPersons={filteredPersons} deletePerson={deletePerson} />
     </div>
   );
 };
